@@ -8,8 +8,6 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
     /**
      * Seed the application's database.
      */
@@ -26,15 +24,17 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
             'role' => 'admin',
-            'branch_id' => $branch->id,
+            'gender' => 'masculino',
+            'branch_id' => null,
             'is_active' => true,
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'Gerente Sucursal',
+            'name' => 'Gerente',
             'email' => 'gerente@app.com',
             'password' => bcrypt('password'),
             'role' => 'manager',
+            'gender' => 'femenino',
             'branch_id' => $branch->id,
             'is_active' => true,
         ]);

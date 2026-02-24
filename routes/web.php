@@ -3,5 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check() && auth()->user()->role === 'manager') {
+        return redirect('/app');
+    }
+    return redirect('/admin');
 });

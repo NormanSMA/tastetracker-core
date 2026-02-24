@@ -19,7 +19,7 @@ class User extends Authenticatable implements FilamentUser
 
     public function canAccessPanel(Panel $panel): bool
     {
-        if (! $this->is_active) {
+        if (!$this->is_active) {
             return false;
         }
 
@@ -43,6 +43,7 @@ class User extends Authenticatable implements FilamentUser
         'name',
         'email',
         'password',
+        'pin',
         'branch_id',
         'role',
         'photo',

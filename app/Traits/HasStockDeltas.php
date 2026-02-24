@@ -21,12 +21,21 @@ trait HasStockDeltas
      */
     public function adjustStock(float $amount, string $reason): void
     {
-        DB::transaction(function () use ($amount) {
+        DB::transaction(function () use ($amount, $reason) {
             if ($amount >= 0) {
                 $this->increment('stock_quantity', $amount);
             } else {
                 $this->decrement('stock_quantity', abs($amount));
             }
+
+            \App\Models\StockLog::create([
+                'branch_id' => $this->branch_id,
+                'ingredient_id' => $this->id,
+                'user_id' => auth()->check() ? auth()->id() : null,
+                'amount' => abs($amount),
+                'type' => $amount >= 0 ? 'add' : 'subtract',
+                'reason' => $reason,
+            ]);
 
             $this->refresh();
         });
